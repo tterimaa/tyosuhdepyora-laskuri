@@ -16,11 +16,20 @@
       .custom-green {
         background-color: rgb(0, 66, 37);
       }
+      .custom-green-lighter {
+        background-color: rgb(0, 105, 63);
+      }
     </style>
   </head>
   <body class="bg-gray-100 flex justify-center items-center h-screen m-0">
     <div class="bg-white rounded-xl shadow-lg p-8 max-w-3xl w-full">
-      <h2 class="text-3xl font-bold mb-6 text-center">Laskuri työntekijälle</h2>
+        <div>
+        <img class="inline-block" src="https://ik.imagekit.io/tterimaa/taustaton%20logo-musta.png_7BxpEqhH_.png?updatedAt=1718457962794">
+        <h2 class="text-3xl font-bold mb-6 text-center">
+        Laskuri työntekijälle
+        </h2>
+        </div>
+      </h2>
       <p class="text-center mb-6">
         Tällä laskurilla sinun on helppo arvioida EliteBike Pyöräedulla saamaasi
         hyötyä verrattuna saman pyörän hankkimiseen ilman pyöräetua
@@ -34,11 +43,11 @@
             id="bikePrice"
             min="500"
             max="5000"
-            step="100"
+            step="50"
             value="2000"
             class="w-full"
           />
-          <span id="bikePriceValue" class="block mt-2 text-center text-lg">2000 €</span>
+          <span id="bikePriceValue" class="block mt-2 text-center text-lg"></span>
         </label>
         <label class="flex-1 mx-2">
           Kuukausipalkkasi
@@ -55,23 +64,23 @@
         </label>
       </div>
 
-      <div class="flex justify-between custom-green text-white p-6 rounded-xl">
-        <div class="flex-1">
+      <div class="flex justify-between text-white">
+        <div class="text-center flex-1 p-6 m-1 custom-green rounded-xl">
           <h3 class="text-2xl font-semibold">Säästö</h3>
-          <p id="savingsAmount" class="text-3xl font-bold mt-2">1310 €</p>
-          <p class="text-lg mt-2">2000 €</p>
+          <p id="savingsAmount" class="text-3xl font-bold mt-2"></p>
+          <p id="savingsPercentage" class="mt-2">30%</p>
         </div>
-        <div class="flex-1">
-          <h3 class="text-2xl font-semibold">Pyörän kustannus</h3>
+        <div class="text-center flex-1 p-6 m-1 custom-green-lighter rounded-xl">
+          <h3 class="text-2xl  font-semibold">Pyörän kustannus</h3>
           <p id="finalCost" class="text-3xl font-bold mt-2">690 €</p>
-          <p class="text-lg mt-2 line-through">2000 €</p>
+          <p id="startCost" class="mt-2 line-through">2000 €</p>
         </div>
       </div>
 
       <div class="bg-gray-200 p-6 rounded-xl mt-6">
-        <p>Vuokra-aika: <span id="rentalPeriod">24 kk</span></p>
-        <p>Vähennykset bruttopalkasta: <span id="salaryDeduction">2400 €</span></p>
-        <p>Pyörän lunastushinta lopuksi (5%): <span id="purchasePrice">100 €</span></p>
+        <p>Vuokra-aika: <span id="rentalPeriod"></span></p>
+        <p>Vähennykset bruttopalkasta: <span id="salaryDeduction"></span></p>
+        <p>Pyörän lunastushinta lopuksi (5%): <span id="purchasePrice"></span></p>
       </div>
     </div>
 
@@ -79,31 +88,346 @@
       const bikePriceSlider = document.getElementById("bikePrice");
       const monthlySalarySlider = document.getElementById("monthlySalary");
       const bikePriceValue = document.getElementById("bikePriceValue");
+      const bikePriceValues = document.getElementsByClassName("bikePriceValue")
+      const rentalPeriodValue = document.getElementById("rentalPeriod");
       const monthlySalaryValue = document.getElementById("monthlySalaryValue");
       const finalCost = document.getElementById("finalCost");
+      const startCost = document.getElementById("startCost");
       const salaryDeduction = document.getElementById("salaryDeduction");
       const purchasePrice = document.getElementById("purchasePrice");
       const savingsAmount = document.getElementById("savingsAmount");
+      
+      function getTaxPercentage(income) {
+        if (income < 15000) {
+            return 7.9;
+        } else if (income < 16000) {
+            return 8.0;
+        } else if (income < 17000) {
+            return 8.1;
+        } else if (income < 18000) {
+            return 9.3;
+        } else if (income < 19000) {
+            return 9.4;
+        } else if (income < 20000) {
+            return 10.8;
+        } else if (income < 21000) {
+            return 12.1;
+        } else if (income < 22000) {
+            return 13.2;
+        } else if (income < 23000) {
+            return 14.2;
+        } else if (income < 24000) {
+            return 15.0;
+        } else if (income < 25000) {
+            return 15.8;
+        } else if (income < 26000) {
+            return 16.6;
+        } else if (income < 27000) {
+            return 17.3;
+        } else if (income < 28000) {
+            return 18.0;
+        } else if (income < 29000) {
+            return 18.8;
+        } else if (income < 30000) {
+            return 19.6;
+        } else if (income < 31000) {
+            return 20.4;
+        } else if (income < 32000) {
+            return 21.1;
+        } else if (income < 33000) {
+            return 21.8;
+        } else if (income < 34000) {
+            return 22.4;
+        } else if (income < 35000) {
+            return 22.8;
+        } else if (income < 36000) {
+            return 23.3;
+        } else if (income < 37000) {
+            return 23.7;
+        } else if (income < 38000) {
+            return 24.1;
+        } else if (income < 39000) {
+            return 24.7;
+        } else if (income < 40000) {
+            return 25.3;
+        } else if (income < 41000) {
+            return 25.9;
+        } else if (income < 42000) {
+            return 26.4;
+        } else if (income < 43000) {
+            return 27.0;
+        } else if (income < 44000) {
+            return 27.5;
+        } else if (income < 45000) {
+            return 28.0;
+        } else if (income < 46000) {
+            return 28.4;
+        } else if (income < 47000) {
+            return 28.9;
+        } else if (income < 48000) {
+            return 29.3;
+        } else if (income < 49000) {
+            return 29.7;
+        } else if (income < 50000) {
+            return 30.1;
+        } else if (income < 51000) {
+            return 30.5;
+        } else if (income < 52000) {
+            return 30.8;
+        } else if (income < 53000) {
+            return 31.2;
+        } else if (income < 54000) {
+            return 31.5;
+        } else if (income < 55000) {
+            return 31.8;
+        } else if (income < 56000) {
+            return 32.1;
+        } else if (income < 57000) {
+            return 32.4;
+        } else if (income < 58000) {
+            return 33.0;
+        } else if (income < 59000) {
+            return 33.3;
+        } else if (income < 60000) {
+            return 33.6;
+        } else if (income < 61000) {
+            return 34.0;
+        } else if (income < 62000) {
+            return 34.3;
+        } else if (income < 63000) {
+            return 34.5;
+        } else if (income < 64000) {
+            return 34.8;
+        } else if (income < 65000) {
+            return 35.1;
+        } else if (income < 66000) {
+            return 35.4;
+        } else if (income < 67000) {
+            return 35.6;
+        } else if (income < 68000) {
+            return 35.9;
+        } else if (income < 69000) {
+            return 36.1;
+        } else if (income < 70000) {
+            return 36.3;
+        } else if (income < 71000) {
+            return 36.6;
+        } else if (income < 72000) {
+            return 36.8;
+        } else if (income < 73000) {
+            return 37.0;
+        } else if (income < 74000) {
+            return 37.2;
+        } else if (income < 75000) {
+            return 37.4;
+        } else if (income < 76000) {
+            return 37.6;
+        } else if (income < 77000) {
+            return 37.7;
+        } else if (income < 78000) {
+            return 37.9;
+        } else if (income < 79000) {
+            return 38.1;
+        } else if (income < 80000) {
+            return 38.3;
+        } else if (income < 81000) {
+            return 38.4;
+        } else if (income < 82000) {
+            return 38.6;
+        } else if (income < 83000) {
+            return 38.7;
+        } else if (income < 84000) {
+            return 38.9;
+        } else if (income < 85000) {
+            return 39.0;
+        } else if (income < 86000) {
+            return 39.2;
+        } else if (income < 87000) {
+            return 39.3;
+        } else if (income < 88000) {
+            return 39.5;
+        } else if (income < 89000) {
+            return 39.6;
+        } else if (income < 90000) {
+            return 39.7;
+        } else if (income < 91000) {
+            return 39.9;
+        } else if (income < 92000) {
+            return 40.0;
+        } else if (income < 93000) {
+            return 40.1;
+        } else if (income < 94000) {
+            return 40.2;
+        } else if (income < 95000) {
+            return 40.3;
+        } else if (income < 96000) {
+            return 40.4;
+        } else if (income < 97000) {
+            return 40.5;
+        } else if (income < 98000) {
+            return 40.7;
+        } else if (income < 99000) {
+            return 40.8;
+        } else if (income < 100000) {
+            return 41.0;
+        } else if (income < 101000) {
+            return 41.1;
+        } else if (income < 102000) {
+            return 41.3;
+        } else if (income < 103000) {
+            return 41.4;
+        } else if (income < 104000) {
+            return 41.6;
+        } else if (income < 105000) {
+            return 41.7;
+        } else if (income < 106000) {
+            return 41.9;
+        } else if (income < 107000) {
+            return 42.0;
+        } else if (income < 108000) {
+            return 42.2;
+        } else if (income < 109000) {
+            return 42.3;
+        } else if (income < 110000) {
+            return 42.4;
+        } else if (income < 111000) {
+            return 42.6;
+        } else if (income < 112000) {
+            return 42.7;
+        } else if (income < 113000) {
+            return 42.8;
+        } else if (income < 114000) {
+            return 42.9;
+        } else if (income < 115000) {
+            return 43.1;
+        } else if (income < 116000) {
+            return 43.2;
+        } else if (income < 117000) {
+            return 43.3;
+        } else if (income < 118000) {
+            return 43.4;
+        } else if (income < 119000) {
+            return 43.5;
+        } else if (income < 120000) {
+            return 43.6;
+        } else if (income < 121000) {
+            return 43.7;
+        } else if (income < 122000) {
+            return 43.8;
+        } else if (income < 123000) {
+            return 43.9;
+        } else if (income < 124000) {
+            return 44.0;
+        } else if (income < 125000) {
+            return 44.1;
+        } else if (income < 126000) {
+            return 44.2;
+        } else if (income < 127000) {
+            return 44.3;
+        } else if (income < 128000) {
+            return 44.4;
+        } else if (income < 129000) {
+            return 44.5;
+        } else if (income < 130000) {
+            return 44.6;
+        } else if (income < 131000) {
+            return 44.7;
+        } else if (income < 132000) {
+            return 44.8;
+        } else if (income < 133000) {
+            return 44.9;
+        } else if (income < 134000) {
+            return 45.0;
+        } else if (income < 135000) {
+            return 45.1;
+        } else if (income < 136000) {
+            return 45.2;
+        } else if (income < 137000) {
+            return 45.3;
+        } else if (income < 138000) {
+            return 45.4;
+        } else if (income < 139000) {
+            return 45.5;
+        } else if (income < 140000) {
+            return 45.6;
+        } else if (income < 141000) {
+            return 45.7;
+        } else if (income < 142000) {
+            return 45.8;
+        } else if (income < 143000) {
+            return 45.9;
+        } else if (income < 144000) {
+            return 46.0;
+        } else if (income < 145000) {
+            return 46.1;
+        } else if (income < 146000) {
+            return 46.2;
+        } else if (income < 147000) {
+            return 46.3;
+        } else if (income < 148000) {
+            return 46.4;
+        } else if (income < 149000) {
+            return 46.5;
+        } else if (income < 150000) {
+            return 46.6;
+        } else {
+            return "Income not found in table";
+        }
+    }
+
 
       function updateValues() {
         const bikePrice = parseInt(bikePriceSlider.value);
         const monthlySalary = parseInt(monthlySalarySlider.value);
-        const rentalPeriod = 24;
         const purchasePercentage = 0.05;
+                                                    
+        // Calculate total bike price with insurance and financing costs
+        const totalBikePrice = bikePrice / 0.8;
+                                    
+        // Calculate rental period
+        const rentalPeriod = Math.round(totalBikePrice / 100);
+        
+        // Calculate tax percentage with normal income
+        const holidayPay = 0.5 * monthlySalary;
+        const yearlySalary = monthlySalary * 12;
+        const totalIncome = yearlySalary + holidayPay;
+        const incomeTax = getTaxPercentage(totalIncome);
+        const seinajokiTax = 8.36;
+        const seinäjokiChurchTax = 1.6;
+        const totalTax = incomeTax + seinajokiTax + seinäjokiChurchTax;
+                                                    
+        // Calculate tax percentage when bike price is deduced from salary
+        const totalIncomeDeduction = totalIncome - bikePrice;
+        const incomeTaxDeduction = getTaxPercentage(totalIncomeDeduction);
+        const totalTaxDeduction = incomeTaxDeduction + seinajokiTax + seinäjokiChurchTax;
+        
+        // Calculate monthly savings
+        const monthlySavings = (monthlySalary * totalTax * 0.01) - (monthlySalary * totalTaxDeduction * 0.01);
+        
+        // Calculate total savings
+        const totalSavings = monthlySavings * rentalPeriod;
+        
+        console.log("--------------------");
+        console.log("Monthly salary: " + monthlySalary);
+        console.log("Total tax percentage: " + totalTax);
+        console.log("Total tax percentage with deduction: " + totalTaxDeduction);
+        console.log("--------------------");
+
 
         bikePriceValue.textContent = `${bikePrice} €`;
         monthlySalaryValue.textContent = `${monthlySalary} €/kk`;
+        rentalPeriodValue.textContent = `${rentalPeriod} kk`;
+        startCost.textContent = `${bikePrice} €`;
 
-        const salaryDeductionValue = rentalPeriod * monthlySalary * 0.03125;
-        const taxEffectValue = salaryDeductionValue * 0.428;
+        const salaryDeductionValue = totalSavings;
         const purchasePriceValue = bikePrice * purchasePercentage;
-        const finalCostValue = bikePrice - taxEffectValue + purchasePriceValue;
+        const finalCostValue = bikePrice - totalSavings;
         const savings = bikePrice - finalCostValue;
 
-        salaryDeduction.textContent = `${salaryDeductionValue.toFixed(2)} €`;
-        purchasePrice.textContent = `${purchasePriceValue.toFixed(2)} €`;
-        finalCost.textContent = `${finalCostValue.toFixed(2)} €`;
-        savingsAmount.textContent = `${savings.toFixed(2)} €`;
+        salaryDeduction.textContent = `${salaryDeductionValue.toFixed(0)} €`;
+        purchasePrice.textContent = `${purchasePriceValue.toFixed(0)} €`;
+        finalCost.textContent = `${finalCostValue.toFixed(0)} €`;
+        savingsAmount.textContent = `${savings.toFixed(0)} €`;
       }
 
       bikePriceSlider.addEventListener("input", updateValues);
