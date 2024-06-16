@@ -25,7 +25,7 @@
     <div class="bg-white rounded-xl shadow-lg p-8 max-w-3xl w-full">
         <div>
         <img class="inline-block" src="https://ik.imagekit.io/tterimaa/taustaton%20logo-musta.png_7BxpEqhH_.png?updatedAt=1718457962794">
-        <h2 class="text-3xl font-bold mb-6 text-center">
+        <h2 class="text-3xl font-bold mb-6 mt-6 text-center">
         Laskuri työntekijälle
         </h2>
         </div>
@@ -35,8 +35,8 @@
         hyötyä verrattuna saman pyörän hankkimiseen ilman pyöräetua
       </p>
 
-      <div class="flex justify-between items-center mb-8">
-        <label class="flex-1 mx-2">
+      <div class="flex flex-col sm:flex-row justify-between items-center mb-8">
+        <label class="flex-1 mx-2 w-full">
           Pyörän hinta varusteineen
           <input
             type="range"
@@ -49,7 +49,7 @@
           />
           <span id="bikePriceValue" class="block mt-2 text-center text-lg"></span>
         </label>
-        <label class="flex-1 mx-2">
+        <label class="flex-1 mx-2 w-full">
           Kuukausipalkkasi
           <input
             type="range"
@@ -64,7 +64,7 @@
         </label>
       </div>
 
-      <div class="flex justify-between text-white">
+      <div class="flex flex-col sm:flex-row justify-between text-white">
         <div class="text-center flex-1 p-6 m-1 custom-green rounded-xl">
           <h3 class="text-2xl font-semibold">Säästö</h3>
           <p id="savingsAmount" class="text-3xl font-bold mt-2"></p>
