@@ -390,13 +390,26 @@
         
         // Calculate tax percentage with normal income
         const yearlySalary = monthlySalary * 12.5;
-        const incomeTax = getTaxPercentage(yearlySalary);
+
+        // Calculate ansiotulovähennys for salary
+        // Assuming minimum salary is 12 000 € maximum deduction is applied
+        let deduction = 3570;
+        // tulonhankkimisvähennys (income deduction) is 750 €
+        deduction += 750;
+        // tyel-maksu (pension insurance) is 7,15 % of salary
+        deduction += yearlySalary * 0.0715;
+        // työttömyysvakuutusmaksu (unemployment insurance) is 0,79 % of salary
+        deduction += yearlySalary * 0.0079;
+        // sairausvakuutusen päiväraha (health insurance daily allowance) is 1,01 % of salary
+        deduction += yearlySalary * 0.0101;
+
+        const incomeTax = getTaxPercentage(yearlySalary - deduction);
                                                     
         // Calculate tax percentage when bike price is deduced from salary
         const monthlyDeduction = 100;
         const yearlyDeduction = monthlyDeduction * 12;
-        const totalIncomeDeduction = yearlySalary - yearlyDeduction;
-        const incomeTaxDeducted = getTaxPercentage(totalIncomeDeduction);
+        const totalIncomeDeducted = yearlySalary - yearlyDeduction;
+        const incomeTaxDeducted = getTaxPercentage(totalIncomeDeducted - deduction);
         
         // Calculate monthly savings
         const monthlyTaxWithoutBenefit = (monthlySalary * incomeTax * 0.01);
@@ -414,6 +427,16 @@
         const monthlySavingsForRemainingMonts = (monthlySalary * incomeTax * 0.01) - (monthlySalary * taxForRemainingYear * 0.01);
         
         totalSavings += monthlySavingsForRemainingMonts * remainingMonths;
+                                                    
+        // Debug log
+        console.log("---------")
+        console.log("Income " + yearlySalary);
+        console.log("Deducted income " + totalIncomeDeducted);
+        console.log("Tax % without benefit " + incomeTax);
+        console.log("Tax € without benefit " + monthlyTaxWithoutBenefit);
+        console.log("Tax % with benefit " + incomeTaxDeducted);
+        console.log("Tax € with benefit " + monthlyTaxWithBenefit);
+        
 
         bikePriceValue.textContent = `${bikePrice} €`;
         monthlySalaryValue.textContent = `${monthlySalary} €/kk`;
