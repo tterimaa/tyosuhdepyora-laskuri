@@ -411,7 +411,7 @@
         // Calculate tax percentage for remaining months
         const remainingMonths = rentalPeriod % 12;
         const incomeDeductionForRemainingYear = yearlySalary - remainingMonths * monthlyDeduction;
-        const taxForRemainingYear = getTaxPercentage(incomeDeductionForRemainingYear);
+        const taxForRemainingYear = getTaxPercentage(incomeDeductionForRemainingYear) - tyelEtc;
         const monthlySavingsForRemainingMonts = (monthlySalary * incomeTax * 0.01) - (monthlySalary * taxForRemainingYear * 0.01);
         
         totalSavings += monthlySavingsForRemainingMonts * remainingMonths;
