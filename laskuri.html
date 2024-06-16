@@ -393,15 +393,27 @@
         const incomeTax = getTaxPercentage(yearlySalary);
                                                     
         // Calculate tax percentage when bike price is deduced from salary
-        const yearlyDeduction = (totalBikePrice / rentalPeriod) * 12;
+        const monthlyDeduction = 100;
+        const yearlyDeduction = monthlyDeduction * 12;
         const totalIncomeDeduction = yearlySalary - yearlyDeduction;
         const incomeTaxDeducted = getTaxPercentage(totalIncomeDeduction);
         
         // Calculate monthly savings
-        const monthlySavings = (monthlySalary * incomeTax * 0.01) - (monthlySalary * incomeTaxDeducted * 0.01);
-        
+        const monthlyTaxWithoutBenefit = (monthlySalary * incomeTax * 0.01);
+        const monthlyTaxWithBenefit = (monthlySalary * incomeTaxDeducted * 0.01);
+        const monthlySavings = monthlyTaxWithoutBenefit - monthlyTaxWithBenefit;       
+
         // Calculate total savings
-        const totalSavings = monthlySavings * rentalPeriod;
+        const fullYears = Math.floor(rentalPeriod / 12);
+        let totalSavings = monthlySavings * (fullYears * 12);
+                                                    
+        // Calculate tax percentage for remaining months
+        const remainingMonths = rentalPeriod % 12;
+        const incomeDeductionForRemainingYear = yearlySalary - remainingMonths * monthlyDeduction;
+        const taxForRemainingYear = getTaxPercentage(incomeDeductionForRemainingYear);
+        const monthlySavingsForRemainingMonts = (monthlySalary * incomeTax * 0.01) - (monthlySalary * taxForRemainingYear * 0.01);
+        
+        totalSavings += monthlySavingsForRemainingMonts * remainingMonths;
 
         bikePriceValue.textContent = `${bikePrice} €`;
         monthlySalaryValue.textContent = `${monthlySalary} €/kk`;
