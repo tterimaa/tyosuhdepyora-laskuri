@@ -399,32 +399,21 @@
         const totalIncomeDeducted = yearlySalary - yearlyDeduction;
         const incomeTaxDeducted = getTaxPercentage(totalIncomeDeducted) - tyelEtc;
         
-        // Calculate monthly savings
-        const monthlyTaxWithoutBenefit = (monthlySalary * incomeTax * 0.01);
-        const monthlyTaxWithBenefit = (monthlySalary * incomeTaxDeducted * 0.01);
-        const monthlySavings = monthlyTaxWithoutBenefit - monthlyTaxWithBenefit;       
+        // Calculate yearly savings
+        const yearlySavings = (yearlySalary * incomeTax * 0.01) - (yearlySalary * incomeTaxDeducted * 0.01);
+        const monthlySavings = yearlySavings / 12;
 
         // Calculate total savings
         const fullYears = Math.floor(rentalPeriod / 12);
-        let totalSavings = monthlySavings * (fullYears * 12);
+        let totalSavings = yearlySavings * fullYears;
+        console.log(totalSavings);
                                                     
-        // Calculate tax percentage for remaining months
+        // Calculate tax percentage for remaining year
         const remainingMonths = rentalPeriod % 12;
-        const incomeDeductionForRemainingYear = yearlySalary - remainingMonths * monthlyDeduction;
-        const taxForRemainingYear = getTaxPercentage(incomeDeductionForRemainingYear) - tyelEtc;
-        const monthlySavingsForRemainingMonts = (monthlySalary * incomeTax * 0.01) - (monthlySalary * taxForRemainingYear * 0.01);
-        
-        totalSavings += monthlySavingsForRemainingMonts * remainingMonths;
-                                                    
-        // Debug log
-        console.log("---------")
-        console.log("Income " + yearlySalary);
-        console.log("Deducted income " + totalIncomeDeducted);
-        console.log("Tax % without benefit " + incomeTax);
-        console.log("Tax € without benefit " + monthlyTaxWithoutBenefit);
-        console.log("Tax % with benefit " + incomeTaxDeducted);
-        console.log("Tax € with benefit " + monthlyTaxWithBenefit);
-        
+        const incomeDeductedForRemainingYear = yearlySalary - remainingMonths * 100; // could be +-50
+        const taxForRemainingYear = getTaxPercentage(incomeDeductedForRemainingYear) - tyelEtc;
+        const taxSavingsForRemainingYear = (yearlySalary * incomeTax * 0.01) - (yearlySalary * taxForRemainingYear * 0.01);
+        totalSavings += taxSavingsForRemainingYear;
 
         bikePriceValue.textContent = `${bikePrice} €`;
         monthlySalaryValue.textContent = `${monthlySalary} €/kk`;
