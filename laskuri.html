@@ -386,7 +386,7 @@
         const totalBikePrice = bikePrice / 0.8;
                                     
         // Calculate rental period
-        const rentalPeriod = Math.round(totalBikePrice / 100);
+        const rentalPeriod = Math.round((totalBikePrice - (bikePrice*purchasePercentage)) / 100);
         
         // Calculate tax percentage with normal income
         const yearlySalary = monthlySalary * 12.5;
