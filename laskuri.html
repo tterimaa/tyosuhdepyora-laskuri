@@ -96,6 +96,7 @@
       const salaryDeduction = document.getElementById("salaryDeduction");
       const purchasePrice = document.getElementById("purchasePrice");
       const savingsAmount = document.getElementById("savingsAmount");
+      const savingsPercentage = document.getElementById("savingsPercentage");
       
       function getTaxPercentage(income) {
         if (income < 15000) {
@@ -388,29 +389,26 @@
         const rentalPeriod = Math.round(totalBikePrice / 100);
         
         // Calculate tax percentage with normal income
-        const holidayPay = 0.5 * monthlySalary;
-        const yearlySalary = monthlySalary * 12;
-        const totalIncome = yearlySalary + holidayPay;
-        const incomeTax = getTaxPercentage(totalIncome);
-        const seinajokiTax = 8.36;
-        const seinäjokiChurchTax = 1.6;
-        const totalTax = incomeTax + seinajokiTax + seinäjokiChurchTax;
+        const yearlySalary = monthlySalary * 12.5;
+        const incomeTax = getTaxPercentage(yearlySalary);
                                                     
         // Calculate tax percentage when bike price is deduced from salary
-        const totalIncomeDeduction = totalIncome - bikePrice;
-        const incomeTaxDeduction = getTaxPercentage(totalIncomeDeduction);
-        const totalTaxDeduction = incomeTaxDeduction + seinajokiTax + seinäjokiChurchTax;
+        const yearlyDeduction = (totalBikePrice / rentalPeriod) * 12;
+        const totalIncomeDeduction = yearlySalary - yearlyDeduction;
+        const incomeTaxDeducted = getTaxPercentage(totalIncomeDeduction);
         
         // Calculate monthly savings
-        const monthlySavings = (monthlySalary * totalTax * 0.01) - (monthlySalary * totalTaxDeduction * 0.01);
+        const monthlySavings = (monthlySalary * incomeTax * 0.01) - (monthlySalary * incomeTaxDeducted * 0.01);
         
         // Calculate total savings
         const totalSavings = monthlySavings * rentalPeriod;
         
         console.log("--------------------");
         console.log("Monthly salary: " + monthlySalary);
-        console.log("Total tax percentage: " + totalTax);
-        console.log("Total tax percentage with deduction: " + totalTaxDeduction);
+        console.log("Total tax percentage: " +incomeTax);
+        console.log("Total tax percentage with deduction: " + incomeTaxDeducted);
+        console.log("Monthly savings: " + monthlySavings);
+        console.log("Total savings: " + totalSavings);
         console.log("--------------------");
 
 
@@ -419,7 +417,7 @@
         rentalPeriodValue.textContent = `${rentalPeriod} kk`;
         startCost.textContent = `${bikePrice} €`;
 
-        const salaryDeductionValue = totalSavings;
+        const salaryDeductionValue = 100 * rentalPeriod;
         const purchasePriceValue = bikePrice * purchasePercentage;
         const finalCostValue = bikePrice - totalSavings;
         const savings = bikePrice - finalCostValue;
@@ -428,6 +426,7 @@
         purchasePrice.textContent = `${purchasePriceValue.toFixed(0)} €`;
         finalCost.textContent = `${finalCostValue.toFixed(0)} €`;
         savingsAmount.textContent = `${savings.toFixed(0)} €`;
+        savingsPercentage.textContent = `${((savings / bikePrice) * 100).toFixed(0)}%`;
       }
 
       bikePriceSlider.addEventListener("input", updateValues);
