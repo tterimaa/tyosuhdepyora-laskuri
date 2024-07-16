@@ -32,6 +32,22 @@
                 margin-top: 230px;
             }
         }
+        @media (max-width: 440px) {
+            .custom-padding {
+                padding: 0px;
+            }
+        }
+        @media (max-width: 440px) {
+            body {
+                font-size: 13px;
+            }
+        }
+        td {
+            padding: 4px;
+        }
+        .custom-border {
+            border-top: 1px solid rgb(16, 16, 16);
+        }
     </style>
 </head>
 
@@ -75,11 +91,38 @@
                 <p id="startCost" class="mt-2 line-through">2000 €</p>
             </div>
         </div>
-
-        <div class="bg-gray-200 p-6 rounded-xl mt-6">
-            <p>Vuokra-aika: <span id="rentalPeriod"></span></p>
-            <p>Vähennykset bruttopalkasta: <span id="salaryDeduction"></span></p>
-            <p>Pyörän lunastushinta lopuksi (5%): <span id="purchasePrice"></span></p>
+        
+        <div class="bg-gray-200 rounded-xl mt-6 p-2">
+            <table class="w-full border-spacing-1">
+                <tr>
+                    <td>Vuokra-aika:</td>
+                    <td><span id="rentalPeriod"></span></td>
+                </tr>
+                <tr>
+                    <td>Vähennykset bruttopalkasta yhteensä:</td>
+                    <td><span id="salaryDeduction"></span></td>
+                </tr>
+                <tr>
+                    <td>Pyöräedun vaikutus tuloveroihin:</td>
+                    <td><span id="taxSavings"></span></td>
+                </tr>
+                <tr>
+                    <td>Pyörän lunastushinta lopuksi (5%):</td>
+                    <td><span id="purchasePrice"></span></td>
+                </tr>
+                <tr>
+                    <td>Kokonaiskustannus:</td>
+                    <td><span id="totalCostInfo"></span></td>
+                </tr>
+                <tr>
+                    <td>Pyörän hankintahinta varusteineen:</td>
+                    <td><span id="bikePriceInfo"></span></td>
+                </tr>
+                <tr class="custom-border font-bold">
+                    <td>Säästö pyöräedulla: </span></td>
+                    <td><span id="savingsInfo"></span></td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -96,6 +139,10 @@
         const purchasePrice = document.getElementById("purchasePrice");
         const savingsAmount = document.getElementById("savingsAmount");
         const savingsPercentage = document.getElementById("savingsPercentage");
+        const taxSavingsValue = document.getElementById("taxSavings");
+        const bikePriceInfoValue = document.getElementById("bikePriceInfo");
+        const totalCostInfoValue = document.getElementById("totalCostInfo");
+        const savingsInfoValue = document.getElementById("savingsInfo");
 
         function getTaxPercentage(income) {
             if (income <= 14000) return 7.9;
@@ -495,14 +542,19 @@
 
             const salaryDeductionValue = monthlyLeasingPayment * rentalPeriod;
             const purchasePriceValue = bikePrice * purchasePercentage;
-            const finalCostValue = totalBikePrice - totalSavings;
+            const finalCostValue = totalBikePrice - totalSavings + purchasePriceValue;
             const savings = bikePrice - finalCostValue;
+            const totalCostValue = finalCostValue + purchasePriceValue;
 
             salaryDeduction.textContent = `${salaryDeductionValue.toFixed(0)} €`;
-            purchasePrice.textContent = `${purchasePriceValue.toFixed(0)} €`;
+            purchasePrice.textContent = `+${purchasePriceValue.toFixed(0)} €`;
             finalCost.textContent = `${finalCostValue.toFixed(0)} €`;
             savingsAmount.textContent = `${savings.toFixed(0)} €`;
             savingsPercentage.textContent = `${((savings / bikePrice) * 100).toFixed(0)}%`;
+            taxSavingsValue.textContent = `-${totalSavings.toFixed(0)} €`;
+            bikePriceInfoValue.textContent = `${bikePrice} €`;
+            totalCostInfoValue.textContent = `${finalCostValue.toFixed(0)} €`;
+            savingsInfoValue.textContent = `${savings.toFixed(0)} €`;
         }
 
         bikePriceSlider.addEventListener("input", updateValues);
