@@ -37,11 +37,6 @@
                 padding: 0px;
             }
         }
-        @media (max-width: 440px) {
-            body {
-                font-size: 13px;
-            }
-        }
         td {
             padding: 4px;
         }
@@ -52,21 +47,21 @@
 </head>
 
 <body class="bg-gray-100 md:flex justify-center items-center h-screen m-0">
-    <div class="bg-white rounded-xl shadow-lg p-8 max-w-3xl w-full">
+    <div class="bg-white sm:p-4 rounded-xl shadow-lg max-w-3xl w-full">
         <div>
-            <img class="inline-block"
+            <img class="inline-block p-8"
                 src="https://ik.imagekit.io/tterimaa/taustaton%20logo-musta.png_7BxpEqhH_.png?updatedAt=1718457962794">
-            <h2 class="text-3xl font-bold mb-6 mt-6 text-center">
+            <h2 class="text-3xl font-bold mb-6 text-center">
                 Laskuri työntekijälle
             </h2>
         </div>
         </h2>
-        <p class="text-center mb-6">
+        <p class="text-center p-4 mb-6">
             Tällä laskurilla sinun on helppo arvioida Elite Bike Pyöräedulla saamaasi
             hyötyä verrattuna saman pyörän hankkimiseen ilman pyöräetua
         </p>
 
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-8 p-4">
             <label class="flex-1 mx-2 w-full">
                 Pyörän hinta varusteineen
                 <input type="range" id="bikePrice" min="1200" max="4000" step="50" value="2000" class="w-full" />
@@ -80,19 +75,19 @@
         </div>
 
         <div class="flex flex-col sm:flex-row justify-between text-white">
-            <div class="text-center flex-1 p-6 m-1 custom-green rounded-xl">
+            <div class="text-center flex-1 p-6 sm:m-2 custom-green sm:rounded-xl">
                 <h3 class="text-2xl font-semibold">Säästö</h3>
                 <p id="savingsAmount" class="text-3xl font-bold mt-2"></p>
                 <p id="savingsPercentage" class="mt-2">30%</p>
             </div>
-            <div class="text-center flex-1 p-6 m-1 custom-green-lighter rounded-xl">
+            <div class="text-center flex-1 p-6 sm:m-2 custom-green-lighter sm:rounded-xl">
                 <h3 class="text-2xl  font-semibold">Pyörän kustannus</h3>
                 <p id="finalCost" class="text-3xl font-bold mt-2">690 €</p>
                 <p id="startCost" class="mt-2 line-through">2000 €</p>
             </div>
         </div>
         
-        <div class="bg-gray-200 rounded-xl mt-6 p-2">
+        <div class="bg-gray-200 sm:rounded-xl sm:m-2 p-2">
             <table class="w-full border-spacing-1">
                 <tr>
                     <td>Vuokra-aika:</td>
