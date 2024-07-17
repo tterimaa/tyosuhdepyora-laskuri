@@ -371,6 +371,10 @@
             const taxForRemainingYear = getTaxPercentage(incomeDeductedForRemainingYear) - tyelEtc;
             const taxSavingsForRemainingYear = (yearlySalary * incomeTax * 0.01) - (yearlySalary * taxForRemainingYear * 0.01);
             totalSavings += taxSavingsForRemainingYear;
+            
+            //DEBUG
+            console.log("Income tax: ", incomeTax);
+            console.log("Income tax deducted: ", incomeTaxDeducted);
 
             bikePriceValue.textContent = `${bikePrice} €`;
             monthlySalaryValue.textContent = `${monthlySalary} €/kk`;
