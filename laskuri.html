@@ -363,18 +363,14 @@
 
             // Calculate total savings
             const fullYears = Math.floor(rentalPeriod / 12);
-            let totalSavings = yearlySavings * fullYears;
+            let totalSavings = yearlySavings  / 12 * rentalPeriod;
 
             // Calculate tax percentage for remaining year
-            const remainingMonths = rentalPeriod % 12;
-            const incomeDeductedForRemainingYear = yearlySalary - remainingMonths * monthlyLeasingPayment; // could be +-50
-            const taxForRemainingYear = getTaxPercentage(incomeDeductedForRemainingYear) - tyelEtc;
-            const taxSavingsForRemainingYear = (yearlySalary * incomeTax * 0.01) - (yearlySalary * taxForRemainingYear * 0.01);
-            totalSavings += taxSavingsForRemainingYear;
-            
-            //DEBUG
-            console.log("Income tax: ", incomeTax);
-            console.log("Income tax deducted: ", incomeTaxDeducted);
+            //const remainingMonths = rentalPeriod % 12;
+            //const incomeDeductedForRemainingYear = yearlySalary - remainingMonths * monthlyLeasingPayment; // could be +-50
+            //const taxForRemainingYear = getTaxPercentage(incomeDeductedForRemainingYear) - tyelEtc;
+            //const taxSavingsForRemainingYear = (yearlySalary * incomeTax * 0.01) - (yearlySalary * taxForRemainingYear * 0.01);
+            //totalSavings += taxSavingsForRemainingYear;
 
             bikePriceValue.textContent = `${bikePrice} €`;
             monthlySalaryValue.textContent = `${monthlySalary} €/kk`;
